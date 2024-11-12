@@ -17,16 +17,8 @@ app.use(
   })
 );
 app.use(express.json());
-// const corsConfig = {
-//   origin: "*",
-//   credentials: true,
-//   methods: ["GET", "POST", "PUT", "DELETE"],
-// };
-// app.use(cors(corsConfig));
-// app.options("", cors(corsConfig));
-// app.use(cookieParser());
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.rgxjhma.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.wv413.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -493,5 +485,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Arittro's project port listening on: ${port}`);
 });
