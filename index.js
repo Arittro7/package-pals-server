@@ -11,7 +11,9 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
+      // "http://localhost:5173",
+      "https://package-pal-a4678.firebaseapp.com",
+      "https://package-pal-a4678.web.app"
     ],
     credentials: true,
   })
@@ -37,7 +39,7 @@ const ReviewDeliverymanCollection = client
 const BookParcelCollection = client.db("PackagePal").collection("BookParcel");
 
 const cookOption = {
-  httpOnly: true,
+  httpOnly: false,
   sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
   secure: process.env.NODE_ENV === "production" ? true : false,
 };
@@ -462,12 +464,17 @@ async function run() {
     // jwt token apply
 
     app.post("/jwt", async (req, res) => {
-      const user = req.body;
-      const token = jwt.sign(user, process.env.ACCESS_TOKEN, {
-        expiresIn: "365d",
-      });
-      res.send({ token });
+  try {
+    const user = req.body;
+    const token = jwt.sign(user, process.env.ACCESS_TOKEN, {
+      expiresIn: "365d",
     });
+    res.send({ token });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Failed to generate token" });
+  }
+});
 
     // await client.db("admin").command({ ping: 1 });
     console.log(
